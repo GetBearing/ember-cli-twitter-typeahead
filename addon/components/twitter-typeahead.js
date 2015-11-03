@@ -69,7 +69,7 @@ export default Ember.TextField.extend({
           if (object.isEmpty) {
             return '';
           } else {
-            return '<span class="tt-suggestion enter-suggest">Footer</span>';
+//            return '<span class="tt-suggestion enter-suggest">Footer</span>';
           }
         },
         empty() {
