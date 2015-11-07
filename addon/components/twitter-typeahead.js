@@ -31,11 +31,12 @@ export default Ember.TextField.extend({
   classNames: [ 'form-control' ],
 
   keyUp(event) {
-    if (event.which === 13) {
+    if (event.which === 13 || event.which === 9) {
       const $dropdownMenu = this.$().siblings('.tt-dropdown-menu');
       const $suggestions = $dropdownMenu.find('.tt-suggestion:not(.enter-suggest)');
       if ($suggestions.length) {
         $suggestions.first().click();
+        this.setSelectionValue()
       } else {
         this.sendAction('on-select-without-match', this, this.$().val());
       }
@@ -73,7 +74,7 @@ export default Ember.TextField.extend({
           }
         },
         empty() {
-          return "<span class='tt-suggestion enter-suggest'>Empty</span>";
+          return "<span class='tt-suggestion enter-suggest'>No Results</span>";
         }
       }
       /* jshint unused:false */
@@ -101,6 +102,7 @@ export default Ember.TextField.extend({
   setSelectionValue() {
     const selection = this.get('selection');
     if (selection) {
+      this.set('value', get(selection, this.get('displayKey')));
       this.$().typeahead('val', get(selection, this.get('displayKey')));
     }
   },
